@@ -1,0 +1,65 @@
+
+.icon {
+    display: inline-block;
+    zoom: 1;
+}
+
+.icon_switch-off {
+    background-image: url("img/icon_switch-off.png?_sprite");
+    width: 71px;
+    height: 29px
+}
+
+/*a[href*='}{']::after {*/
+    /*content: '}{';*/
+/*}*/
+
+.icon_switch-off {
+    background-image: url("img/icon_switch-off.png?_sprite");
+    width: 71px;
+    height: 29px
+}
+
+.icon_switch-on {
+    background-image: url("img/icon_switch-on.png?_sprite");
+    width: 71px;
+    height: 29px
+}
+
+.icon_tip-ok {
+    background-image: url("img/icon_tip-ok.png?_sprite=tip");
+    width: 24px;
+    height: 24px
+}
+
+
+.icon_wait {
+    background-image: url("img/icon_wait.png?v=1234&_sprite");
+    width: 14px;
+    height: 14px
+}
+.icon_wait { /* duplicate */
+    background-image: url("img/icon_wait.png?_sprite");
+}
+
+.icon_wait { /* duplicate width different target */
+    background-image: url("img/icon_wait.png?_sprite=wait");
+}
+
+@media
+(-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+    .icon_tip-error {
+        background-image: url("img/icon_tip-error@2x.png?_sprite=tip");
+    }
+
+    .icon_tip-ok {
+        background-image: url("img/icon_tip-ok@2x.png?_sprite=tip");
+    }
+
+    .icon_tip-warn {
+        background-image: url("img/icon_tip-warn@2x.png?_sprite=tip");
+    }
+
+}
+

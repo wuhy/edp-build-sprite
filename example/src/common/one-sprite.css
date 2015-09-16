@@ -1,0 +1,10 @@
+.icon {
+    display: inline-block;
+    zoom: 1;
+}
+
+.icon_switch-off {
+    background-image: url("img/icon_switch-off.png?_sprite");
+    width: 71px;
+    height: 29px
+}

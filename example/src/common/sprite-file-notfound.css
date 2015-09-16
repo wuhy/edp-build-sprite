@@ -1,0 +1,11 @@
+.icon_switch-on {
+    background-image: url("img/icon_switch-on2.png?_sprite");
+    width: 71px;
+    height: 29px
+}
+
+.icon_tip-ok {
+    background-image: url("img/icon_tip-ok.png?_sprite");
+    width: 24px;
+    height: 24px
+}

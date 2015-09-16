@@ -1,0 +1,27 @@
+{
+  "name": "edp-build-sprite",
+  "version": "0.1.0",
+  "description": "Auto css sprite processor for edp build",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wuhy/edp-build-sprite.git"
+  },
+  "keywords": [
+    "edp",
+    "css",
+    "sprite"
+  ],
+  "author": "sparklewhy@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "css": "^2.2.1",
+    "edp-build": "^1.1.1",
+    "edp-core": "^1.0.32",
+    "lodash": "^3.10.1",
+    "spritesmith": "^1.4.0"
+  }
+}

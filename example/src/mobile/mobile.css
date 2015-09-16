@@ -1,0 +1,35 @@
+body {
+    height: 100%;
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.box {
+    background: #F5EDED;
+    margin: 10px 0;
+}
+
+.box h3 {
+    border-bottom: 1px solid #E2DBDB;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+#box1 .retina .share {
+    display: inline-block;
+    border: 1px solid #000;
+}
+
+#box1 .retina .qq {
+    width: 29px;
+    height: 28px;
+    background: url(./img/qqspace-retina.png?_sprite) no-repeat;
+    background-size: contain;
+}
+
+#box1 .retina .weibo {
+    width: 34px;
+    height: 28px;
+    background: url(./img/weibo-retina.png?_sprite) no-repeat;
+    background-size: 34px 28px;
+}

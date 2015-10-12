@@ -1,6 +1,6 @@
 {
   "name": "edp-build-sprite",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Auto css sprite processor for edp build",
   "main": "index.js",
   "scripts": {

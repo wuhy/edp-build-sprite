@@ -13,6 +13,14 @@ var spriteGenerator = require('./lib/sprite-generator');
 var spriteCssUpdater = require('./lib/css-updater');
 
 /**
+ * 要修复的 ie6 目标位置
+ *
+ * @type {RegExp}
+ * @const
+ */
+var IE6_FIX_TARGET_REGEXP = /\/\/\s*(DD_belatedPNG\.fix\(['"])\$\{([^'"]+)\}(['"]\);)/g;
+
+/**
  * CSS Auto Sprite 处理器
  *
  * @constructor
@@ -63,13 +71,6 @@ AutoSprite.DEFAULT_OPTIONS = {
     spriteParamName: '_sprite',
 
     /**
-     * 标识要进行 ie6 png 处理的图片的 url 查询参数名称，值为 true 则处理，否则不处理
-     *
-     * @type {string}
-     */
-    ie6ParamName: '_ie6',
-
-    /**
      * 对给定图片进行缩放的比例，只对不带@xx的图片处理
      *
      * @type {number}
@@ -95,12 +96,35 @@ AutoSprite.DEFAULT_OPTIONS = {
     groupByCSSFile: true,
 
     /**
-     * 是否输出 ie6 的 png8 格式的图片及相应的 ie6 样式。如果某个样式引用图片要强制使用或不使用
+     * 是否修复 ie6 的 png 格式的图片显示问题。如果某个样式引用图片要强制使用或不使用
      * 加上参数 `<ie6ParamName>=0|1`，只处理一倍倍率的图片。
      *
      * @type {boolean}
      */
-    fixIE6PNG: false
+    fixIE6PNG: false,
+
+    /**
+     * IE6 修复方法
+     *
+     * @param {Object} file 要修改的文件
+     * @param {Object} toFixSelectorMap 要修复的选择器 map
+     * @return {string}
+     */
+    ie6Fixer: function (file, toFixSelectorMap) {
+        return file.data.replace(IE6_FIX_TARGET_REGEXP, function (match, fixStart, fixStylePath, fixEnd) {
+            var toFixedPaths = fixStylePath.split(',');
+            var fixSelectors = [];
+            for (var i = toFixedPaths.length; i >= 0; i--) {
+                var selectors = toFixSelectorMap[toFixedPaths[i]];
+                selectors && [].push.apply(fixSelectors, selectors);
+            }
+
+            if (fixSelectors.length) {
+                return fixStart + fixSelectors.join(',') + fixEnd;
+            }
+            return '';
+        });
+    }
 };
 
 /**
@@ -118,6 +142,43 @@ AutoSprite.prototype.beforeAll = function (processContext) {
 
     this.allFiles = processContext.getFiles();
 };
+
+/**
+ * 添加需要修复的 ie6 选择器
+ *
+ * @param {Object} allFixedSelectorMap 所有要被修复的选择器
+ * @param {Object} fixedSelectorMap 要修复的选择器
+ */
+function addToFixedSelecotors(allFixedSelectorMap, fixedSelectorMap) {
+    Object.keys(fixedSelectorMap).forEach(function (path) {
+        var existedSelectors = allFixedSelectorMap[path] || [];
+        var updatedSelectors = fixedSelectorMap[path];
+        for (var i = updatedSelectors.length - 1; i >= 0; i--) {
+            var item = updatedSelectors[i];
+            if (existedSelectors.indexOf(item) === -1) {
+                existedSelectors.push(item);
+            }
+        }
+
+        allFixedSelectorMap[path] = existedSelectors;
+    });
+}
+
+/**
+ * 修复 ie6 png 问题
+ *
+ * @param {Object} processor 处理器
+ * @param {Array.<Object>} files 要处理的文件列表
+ * @param {Object} toFixedSelectorMap 要修复的选择器
+ */
+function fixIE6PNG(processor, files, toFixedSelectorMap) {
+    for (var i = files.length - 1; i >= 0; i--) {
+        var f = files[i];
+        if (!/^dep\//.test(f.path) && _.isString(f.data)) {
+            f.data = processor.ie6Fixer(f, toFixedSelectorMap);
+        }
+    }
+}
 
 /**
  * 构建处理
@@ -143,6 +204,7 @@ AutoSprite.prototype.process = function (file, processContext, callback) {
     }
 
     // 生成 sprite 图片
+    var toFixSelectorMap = {};
     spriteGenerator.generate(me.processImgs, me, function (err, result) {
         if (err) {
             me.log.error('generate sprite image error: %s', err.stack);
@@ -169,7 +231,10 @@ AutoSprite.prototype.process = function (file, processContext, callback) {
             }
 
             // 根据 sprite 结果 更新 css 样式
-            spriteCssUpdater.update(result, files, me);
+            addToFixedSelecotors(toFixSelectorMap, spriteCssUpdater.update(result, files, me));
+
+            // 修复 ie6 png 问题
+            fixIE6PNG(me, me.allFiles, toFixSelectorMap);
         }
 
         callback();

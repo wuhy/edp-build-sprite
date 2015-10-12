@@ -48,6 +48,11 @@ body {
     background: url(./img/bookmark_to.png?_sprite=bookmark) no-repeat;
 }
 
+#box0 .common1,
+#box0 .common2 {
+    background: url(./img/bookmark_import.png?_sprite=bookmark) no-repeat;
+}
+
 #box1 .tip {
     width: 24px;
     height: 24px;
@@ -65,7 +70,6 @@ body {
 #box1 .ok {
     background: url(../common/img/icon_tip-ok.png?_sprite) repeat;
 }
-
 
 #box2 .fire {
     width: 100%;

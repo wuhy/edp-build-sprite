@@ -22,8 +22,8 @@
   "license": "ISC",
   "dependencies": {
     "css": "^2.2.1",
-    "edp-build": "^1.1.1",
     "edp-core": "^1.0.32",
+    "iconv-lite": "^0.4.13",
     "lodash": "^3.10.1",
     "spritesmith": "^1.4.0"
   }

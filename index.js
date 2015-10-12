@@ -7,7 +7,7 @@
 
 var _ = require('lodash');
 var pathUtil = require('path');
-var FileInfo = require('edp-build/lib/file-info');
+var FileInfo = require('./lib/file-info');
 var spriteParser = require('./lib/sprite-parser');
 var spriteGenerator = require('./lib/sprite-generator');
 var spriteCssUpdater = require('./lib/css-updater');

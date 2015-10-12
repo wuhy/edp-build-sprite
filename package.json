@@ -10,8 +10,11 @@
     "type": "git",
     "url": "https://github.com/wuhy/edp-build-sprite.git"
   },
+  "bugs": {
+    "url": "http://github.com/wuhy/edp-build-sprite/issues"
+  },
   "keywords": [
-    "edp",
+    "edp build",
     "css",
     "sprite"
   ],

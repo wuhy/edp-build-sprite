@@ -10,12 +10,8 @@ edp-build-sprite 是 [edp-build](https://github.com/ecomfe/edp-build) 的一个�
 
 ### Install
 
-当前开发版，暂时未发布到 npm 仓库，可以如下方式使用：
-
 ```shell
-git clone https://github.com/wuhy/edp-build-sprite.git
-cd edp-build-sprite
-npm install
+npm install edp-build-sprite
 ```
 
 

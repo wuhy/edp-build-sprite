@@ -51,7 +51,10 @@ npm install edp-build-sprite
         // 对给定图片进行缩放的比例，只对不带@xx的图片处理，因此对于不带@xx命名的文件不要
         // 混杂着各种像素密度的图片，对于 pc 可以忽略该选项，移动端如果都是统一使用 2 倍像素的图片，
         // 可以将值设为 0.5
-        scale: 0.5
+        scale: 0.5,
+        
+        // 修复 ie6 png 问题，默认 false
+        fixIE6PNG: true
     });
     
     var pathMapperProcessor = new PathMapper();
@@ -92,7 +95,32 @@ npm install edp-build-sprite
     * 值为 `false` 情况，合并文件为: `<outputDir>/all.png` ；
     * 对于 `@2x` 形式图片会根据其倍率分开处理，分别输出到不同倍率的文件下: `<target>@2x.png` 或 `all@2x.png` 或 `<cssFile>@2x.png` 。
 
- 
+* fixIE6PNG: `boolean` 是否修复 ie6 png 问题， 基于 JS 方式，默认 `false`
+
+    `${xx}` 指定要修复的样式文件，可以指定多个文件，以 `逗号` 分隔
+    
+    ```html
+    <!--[if IE 6]>
+    <script src="dep/DD_belatedPNG/DD_belatedPNG_0.0.8a.js"></script>
+    <script>
+        // DD_belatedPNG.fix("${src/index/main.css}");
+    </script>
+    <![endif]-->
+    ```
+    
+    处理完结果如下：
+    
+    ```html
+     <!--[if IE 6]>
+    <script src="dep/DD_belatedPNG/DD_belatedPNG_0.0.8a.js"></script>
+    <script>
+        DD_belatedPNG.fix("#box4 .retina-2x .btn-off,#box4 .retina-2x .btn-on,#box1 .warn,#box1 .error,#box0 .common2,#box0 .common1,#box0 .to,#box0 .root,#box0 .organize,#box0 .import,#box0 .normal");
+    </script>
+    <![endif]-->
+    ```
+
+* ie6Fixer: `Function` 修复 ie6 png 问题处理器，默认基于 `// DD_belatedPNG.fix("${xx}");` 正则替换，该方法传入两个参数：`file` (要处理的文件), `toFixSelectorMap` (要修复的样式选择器)，返回替换完文件内容
+
 ## Reference
 
 * [sprity](https://github.com/sprity/sprity)

@@ -53,7 +53,7 @@ npm install edp-build-sprite
         // 可以将值设为 0.5
         scale: 0.5,
         
-        // 修复 ie6 png 问题，默认 false
+        // 修复 ie6 png 问题，默认 false，修复方式，见下面 options 说明
         fixIE6PNG: true
     });
     
